@@ -1,8 +1,11 @@
+# getDscFileLink函数：输入为软件包信息，根据一定规则生成对应dsc文件链接。
+
+
 import nwkTools
 from loguru import logger as log
 import os
 def getDscFile(repoURL,dscFileName):
-	#return None
+	#abandon
 	baseURL=repoURL
 	try:
 		dscFilePath=nwkTools.downloadFile(baseURL+dscFileName,os.path.join("/tmp","aptC","repoMetadata","dscFiles",dscFileName.rsplit('/',1)[0]),dscFileName.rsplit('/',1)[1])
@@ -12,6 +15,7 @@ def getDscFile(repoURL,dscFileName):
 		#log.info("download failed : dsc file :"+dscFileName+" from "+baseURL+dscFileName)
 		return None
 def parseDscFile(dscFilePath):
+	#abandon
 	with open(dscFilePath,"r") as f:
 		data=f.readlines()
 	for info in data:
@@ -19,6 +23,8 @@ def parseDscFile(dscFilePath):
 		if info.startswith("Vcs-Git:") or info.startswith("Debian-Vcs-Git:"):
 			return info.split(' ',1)[1]
 def getGitLink(specPackageInfo):
+	#abandon
+	#下载dsc文件，从dsc文件中获取git链接信息。
 	repoURL=specPackageInfo.repoURL
 	if repoURL is None or specPackageInfo.fileName == "":
 		return None

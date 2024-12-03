@@ -1,3 +1,5 @@
+#获取操作系统信息
+
 import os
 OSName=""
 OSDist=""
