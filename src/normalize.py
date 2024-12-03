@@ -9,7 +9,7 @@ def normalReplace(s:str)->str:
 	s=s.replace('(','-leftBracket-')
 	s=s.replace(')','-rightBracket-')
 	s=s.replace(' ','-space-')
-	# s=s.replace('\','backslash')
+	s=s.replace('%','-percent-')
 	return s
 
 def reNormalReplace(s:str)->str:
@@ -21,4 +21,5 @@ def reNormalReplace(s:str)->str:
 	s=s.replace('-leftBracket-','(')
 	s=s.replace('-rightBracket-',')')
 	s=s.replace('-space-',' ')
+	s=s.replace('-percent-','%')
 	return s

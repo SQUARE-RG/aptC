@@ -1,3 +1,5 @@
+#对本地二进制包进行分析
+
 import osInfo
 import RepoFileManager
 import SourcesListManager

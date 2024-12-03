@@ -1,3 +1,5 @@
+#对本地源码包进行分析
+
 import osInfo
 import loadConfig
 import requests
