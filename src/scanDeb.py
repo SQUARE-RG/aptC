@@ -8,7 +8,7 @@ import getNewInstall
 import SourcesListManager
 import nwkTools
 from loguru import logger as log
-from spdx.spdxmain import spdxmain
+from spdx import spdxmain
 import normalize
 import json
 import queryCVE
@@ -75,13 +75,13 @@ def scanDeb(command,options,packages,genSpdx=True,saveSpdxPath=None,genCyclonedx
 			return False
 		if dumpFileOnly is True:
 			if genSpdx is True:
-				spdxPath=spdxmain(selectedPackageName,packageFilePath,dependsList,'spdx',saveSpdxPath)
+				spdxPath=spdxmain.spdxmain(selectedPackageName,packageFilePath,dependsList,'spdx',saveSpdxPath)
 			if genCyclonedx is True:
-				cyclonedxPath=spdxmain(selectedPackageName,packageFilePath,dependsList,'cyclonedx',saveCyclonedxPath)
+				cyclonedxPath=spdxmain.spdxmain(selectedPackageName,packageFilePath,dependsList,'cyclonedx',saveCyclonedxPath)
 			continue
-		spdxPath=spdxmain(selectedPackageName,packageFilePath,dependsList,'spdx',saveSpdxPath)
+		spdxPath=spdxmain.spdxmain(selectedPackageName,packageFilePath,dependsList,'spdx',saveSpdxPath)
 		if genCyclonedx is True:
-			cyclonedxPath=spdxmain(selectedPackageName,packageFilePath,dependsList,'cyclonedx',saveCyclonedxPath)
+			cyclonedxPath=spdxmain.spdxmain(selectedPackageName,packageFilePath,dependsList,'cyclonedx',saveCyclonedxPath)
 		#print("spdx file at "+spdxPath)
 
 		with open(spdxPath,"r") as f:
@@ -97,11 +97,13 @@ def scanDeb(command,options,packages,genSpdx=True,saveSpdxPath=None,genCyclonedx
 			with open(spdxPath,"r") as f:
 				spdxObj=json.load(f)
 			if not checkIncludeDepends(spdxObj):
+				haveOutput=True
 				continue
 			#print("find depends!!!")
 			#print(spdxPath)
 			dependsCves=queryCVE.queryCVE(spdxObj,aptConfigure)
 			if dependsCves is None:
+				haveOutput=True
 				continue
 			for projectName,c in dependsCves.items():
 				if len(c)==0:
@@ -111,6 +113,7 @@ def scanDeb(command,options,packages,genSpdx=True,saveSpdxPath=None,genCyclonedx
 			
 			
 		if cves is None:
+			haveOutput=True
 			continue
 		if selectedPackage.packageInfo.name in cves:
 			selectedPackage_cves=cves[selectedPackage.packageInfo.name]

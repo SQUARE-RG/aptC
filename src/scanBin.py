@@ -8,7 +8,7 @@ import scanSrc
 import os
 import subprocess
 import shutil
-from spdx.spdxmain import spdxmain
+from spdx import spdxmain
 def querypackageInfo(filePaths):
 	res=[]
 	for filePath in filePaths:
@@ -76,8 +76,8 @@ def scanBin(binFiles,options):
 			depends[p.packageInfo.name+'@'+p.packageInfo.version]=p.packageInfo.dumpAsDict()
 		dependsList=list(depends.values())
 		if genSpdx is True:
-			spdxPath=spdxmain(package.fullName,package.fileName,dependsList,'spdx',spdxPath)
+			spdxPath=spdxmain.spdxmain(package.fullName,package.fileName,dependsList,'spdx',spdxPath)
 		if genCyclonedx is True:
-			cyclonedxPath=spdxmain(package.fullName,package.fileName,dependsList,'cyclonedx',cyclonedxPath)
+			cyclonedxPath=spdxmain.spdxmain(package.fullName,package.fileName,dependsList,'cyclonedx',cyclonedxPath)
 		print("generate SBOM for: "+package.fullName)
 	return 0

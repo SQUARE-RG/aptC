@@ -12,7 +12,7 @@ from subprocess import PIPE, Popen
 import shutil
 import os
 import tarfile
-from spdx.sourcemain import srcmain
+from spdx import sourcemain
 def postFile(file,aptConfigure:loadConfig.aptcConfigure):
 	try:
 		files = {'file': open(file, 'rb')}
@@ -195,9 +195,9 @@ def scanSrc(srcs,options):
 		dependsList=list(depends.values())
 		name=os.path.basename(srcPath)
 		if genSpdx is True:
-			srcmain(normalize.normalReplace(name),srcPath,dependsList,'spdx',spdxPath)
+			sourcemain.srcmain(normalize.normalReplace(name),srcPath,dependsList,'spdx',spdxPath)
 		if genCyclonedx is True:
-			srcmain(normalize.normalReplace(name),srcPath,dependsList,'cyclonedx',cyclonedxPath)
+			sourcemain.srcmain(normalize.normalReplace(name),srcPath,dependsList,'cyclonedx',cyclonedxPath)
 
 		print("generate SBOM for: "+name)
 	else:
@@ -211,8 +211,8 @@ def scanSrc(srcs,options):
 				depends[p.packageInfo.name+'@'+p.packageInfo.version]=p.packageInfo.dumpAsDict()
 			dependsList=list(depends.values())
 			if genSpdx is True:
-				srcmain(normalize.normalReplace(package.fullName),srcPath,dependsList,'spdx',spdxPath)
+				sourcemain.srcmain(normalize.normalReplace(package.fullName),srcPath,dependsList,'spdx',spdxPath)
 			if genCyclonedx is True:
-				srcmain(normalize.normalReplace(package.fullName),srcPath,dependsList,'cyclonedx',cyclonedxPath)
+				sourcemain.srcmain(normalize.normalReplace(package.fullName),srcPath,dependsList,'cyclonedx',cyclonedxPath)
 			print("generate SBOM for: "+package.fullName)
 	return 0

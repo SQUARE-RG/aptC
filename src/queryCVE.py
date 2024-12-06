@@ -32,14 +32,17 @@ def queryCVECli(packages,options):
 		spdxObj=json.load(f)
 	cves=queryCVE(spdxObj,aptConfigure)
 	haveOutput=False
-	for projectName,cves in cves.items():
-		if len(cves)==0:
-			continue
+	if cves is not None:
+		for projectName,cves in cves.items():
+			if len(cves)==0:
+				continue
+			haveOutput=True
+			print("package: "+projectName)
+			print(" have cve:")
+			for cve in cves:
+				print(" "+cve['name']+", score: "+str(cve['score']))
+	else:
 		haveOutput=True
-		print("package: "+projectName)
-		print(" have cve:")
-		for cve in cves:
-			print(" "+cve['name']+", score: "+str(cve['score']))
 	if haveOutput is False:
 		print("All packages have no CVE")
 	return False
