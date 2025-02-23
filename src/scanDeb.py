@@ -93,7 +93,7 @@ def scanDeb(command,options,packages,genSpdx=True,saveSpdxPath=None,genCyclonedx
 			packageFilePath=downloadPackage(package)
 			if packageFilePath is None:
 				continue
-			spdxPath=spdxmain(package.fullName,packageFilePath,[],'spdx')
+			spdxPath=spdxmain.spdxmain(package.fullName,packageFilePath,[],'spdx')
 			with open(spdxPath,"r") as f:
 				spdxObj=json.load(f)
 			if not checkIncludeDepends(spdxObj):
