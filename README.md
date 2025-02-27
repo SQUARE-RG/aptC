@@ -10,7 +10,7 @@ docker run --name aptc -v <项目位置>:/code -it ubuntu:jammy /bin/bash
 ```
 docker start aptc
 docker exec -it aptc /bin/bash
-
+```
 进入docker后，在docker内执行:
 ```
 /usr/bin/apt update
